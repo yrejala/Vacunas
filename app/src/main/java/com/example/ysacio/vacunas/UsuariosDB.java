@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 /**
- * Created by isabelinorolandolopezroman on 13/3/17.
+ * Created by maxvillamayor on 13/3/17.
  */
 
 public class UsuariosDB {
