@@ -9,50 +9,61 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 
+/**
+
+ * Created by maxvillamayor on 13/3/17.
+ */
 
 public class UsuariosDB {
 
-    private SQLiteDatabase db;
-    private DBHelper dbHelper;
+        private SQLiteDatabase db;
+        private DBHelper dbHelper;
 
-    public UsuariosDB(Context context) {
-        dbHelper = new DBHelper(context);
-    }
+        public UsuariosDB(Context context) {
+            dbHelper = new DBHelper(context);
 
-    private void openReadableDB() {
-        db = dbHelper.getReadableDatabase();
-    }
-
-    private void openWriteableDB() {
-        db = dbHelper.getWritableDatabase();
-    }
-
-    private void closeDB() {
-        if(db!=null){
-            db.close();
         }
-    }
+
+        private void openReadableDB() {
+            db = dbHelper.getReadableDatabase();
+
+        }
+
+        private void openWriteableDB() {
+            db = dbHelper.getWritableDatabase();
+
+        }
+
+        private void closeDB() {
+            if(db!=null){
+                db.close();
+            }
+        }
+
 
 // CRUD...
 
-    private static class DBHelper extends SQLiteOpenHelper {
+private static class DBHelper extends SQLiteOpenHelper {
 
-        public DBHelper(Context context) {
-            super(context, ConstansDB.DB_NAME, null, ConstansDB.DB_VERSION);
-        }
+    public DBHelper(Context context) {
+        super(context, ConstansDB.DB_NAME, null, ConstansDB.DB_VERSION);
 
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL(ConstansDB.TABLA_USUARIO_SQL);
-            db.execSQL(ConstansDB.TABLA_TIPO_VACUNA_SQL);
-            db.execSQL(ConstansDB.TABLA_VACUNA_SQL);
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        }
     }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(ConstansDB.TABLA_USUARIO_SQL);
+        db.execSQL(ConstansDB.TABLA_TIPO_VACUNA_SQL);
+        db.execSQL(ConstansDB.TABLA_VACUNA_SQL);
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+
+    }
+}
 
 
     private ContentValues clienteMapperContentValues(Usuario usuario) {

@@ -18,7 +18,7 @@ public class Usuario {
 
     public Usuario() {}
 
-    public Usuario(String name, String mail, String name_baby, String date_baby, String sex) {
+    public Usuario(String name ,String mail, String name_baby,String date_baby,String sex) {
         this.name = name;
         this.mail = mail;
         this.name_baby = name_baby;
@@ -44,6 +44,8 @@ public class Usuario {
     public void setName(String name) {
         this.name = name;
     }
+
+
 
     public String getMail() {
         return mail;
@@ -90,9 +92,10 @@ public class Usuario {
 //                '}';
 
                 return
-                " name_baby=" + name_baby +"\n"+
-                " date_baby=" + date_baby +"\n"+
-                " sex=" + sex  ;
+                " Nombre:" + name_baby +"\n"+
+                " Fecha Nacimiento:" + date_baby +"\n"+
+
+                " Sexo:" + sex  ;
     }
 
 

@@ -1,7 +1,7 @@
 package com.example.ysacio.vacunas;
 
 /**
- * Created by isabelinorolandolopezroman on 20/3/17.
+ * Created by maxvillamayor on 20/3/17.
  */
 
 public class Vacunas {

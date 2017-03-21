@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="py.com.agendapediatricaapp.pediatricapp.DetalleUsuario">
+    tools:context="com.example.ysacio.vacunas.DetalleUsuario">
 
     <TextView
         android:id="@+id/txtDetalle"
