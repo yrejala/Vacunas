@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,7 +34,7 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
     private TextView nameTextView;
     private TextView emailTextView;
     private TextView idTextView;
-    ArrayAdapter<String> adaptador;
+    ArrayAdapter<String> adaptador,adaptador2;
 
     private GoogleApiClient googleApiClient;
 
@@ -46,6 +47,8 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
     //String email[] = {"mirna@hotmail.com","belen@gmail.com","carla@yahoo.com","clau@hotmail.com"};
 
     private UsuariosDB db;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +65,9 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
 
 
 
+
+
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -74,11 +80,39 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
 
         db = new UsuariosDB(this);
 
+
+
+
         Usuario cliente1 = new Usuario("Mirian","mirian@mail.net","Franco","22-01-2013","M");
         Usuario cliente2 = new Usuario("Maria","maria@mail.net","Pedro","22-01-2013","M");
         Usuario cliente3 = new Usuario("Mirta","mirna@mail.net","Carlos","22-01-2013","M");
         Usuario cliente4 = new Usuario("Juana","juana@mail.net","Daniel","22-01-2013","M");
         Usuario cliente5 = new Usuario("Blanca","blanca@mail.net","Emma","22-01-2013","F");
+
+
+
+        TipoVacunas tipovac1=new TipoVacunas("BCG","0","1");
+
+        TipoVacunas tipovac2=new TipoVacunas("ROTA","2","2");
+        TipoVacunas tipovac3=new TipoVacunas("IPV","2","3");
+        TipoVacunas tipovac4=new TipoVacunas("PENTA","2","4");
+        TipoVacunas tipovac5=new TipoVacunas("PCV10","2","5");
+
+        TipoVacunas tipovac6=new TipoVacunas("ROTA-2","4","6");
+        TipoVacunas tipovac7=new TipoVacunas("OPV","4","7");
+        TipoVacunas tipovac8=new TipoVacunas("PENTA-2","4","8");
+        TipoVacunas tipovac9=new TipoVacunas("PCV10-2","4","9");
+
+
+
+        Vacunas vacu1=new Vacunas(1,1,"30-05-17","Dr.Jorge");
+        Vacunas vacu2=new Vacunas(1,1,"30-06-17","Dr.Carlos");
+        Vacunas vacu3=new Vacunas(2,2,"30-07-17","Dr.Daniel");
+        Vacunas vacu4=new Vacunas(2,2,"30-08-17","Dr.E.Coronel");
+        Vacunas vacu5=new Vacunas(3,3,"30-09-17","Dr.R.Portillo");
+
+
+
 
         Log.i("---> Base de datos: ", "Insertando Clientes....");
         db.insertCliente(cliente1);
@@ -87,10 +121,29 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
         db.insertCliente(cliente4);
         db.insertCliente(cliente5);
         Log.i("---> Base de datos: ", "Mostrando Clientes....");
+
+
+        db.insertTipo(tipovac1);
+        db.insertTipo(tipovac2);
+        db.insertTipo(tipovac3);
+        db.insertTipo(tipovac4);
+        db.insertTipo(tipovac5);
+        db.insertTipo(tipovac6);
+        db.insertTipo(tipovac7);
+        db.insertTipo(tipovac8);
+        db.insertTipo(tipovac9);
+
+        db.insertVacuna(vacu1);
+        db.insertVacuna(vacu2);
+        db.insertVacuna(vacu3);
+        db.insertVacuna(vacu4);
+        db.insertVacuna(vacu5);
+
+
         //mostrarClientesLog();
 
         //Log.i("---> Base de datos: ", "Borrando Cliente con id 1....");
-       // db.deleteCliente(1);
+        // db.deleteCliente(1);
         //mostrarClientesLog();
 
 //        Log.i("---> Base de datos: ", "Cambiando el nombre de cliente2....");
@@ -118,14 +171,53 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
 
 
     private void mostrarClientesLog() {
-        List list = db.loadClientes();
+        final List list = db.loadClientes();
+
+        final List list2 = db.loadTiposVacunas();
 
 
 
         adaptador = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list.toArray());
+                android.R.layout.simple_list_item_1,list.toArray());
+
+        adaptador2 = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1,list2.toArray());
 
         listado.setAdapter(adaptador);
+
+        listado.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+
+                Intent pasardetalle=new Intent(Principal.this,DetalleUsuario.class);
+                pasardetalle.putExtra("llave",String.valueOf(adaptador.getItem(position))+"\n"+"Tiene 1 mes"+"\n"+"vacunas:"+"BCG"+"\n"+"pendientes: ninguno");
+
+                startActivity(pasardetalle);
+
+//                AlertDialog.Builder builder = new AlertDialog.Builder(Principal.this);
+//                builder.setTitle("Mostrar Lista");
+//                builder.setMessage(String.valueOf(adaptador.getItem(position)));
+//                //builder.setMessage(String.valueOf(response.getPrimitiveProperty("descripcionResultado")));
+//                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        dialog.cancel();
+//
+//                    }
+//                });
+//
+//                builder.show();
+
+
+
+
+            }
+        });
+
 
         for (Object usuario : list) {
             Log.i("---> Base de datos: ", usuario.toString());
@@ -165,7 +257,8 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
 
             nameTextView.setText(account.getDisplayName());
             emailTextView.setText(account.getEmail());
-            idTextView.setText(account.getId());
+            idTextView.setText(account.getId())
+            ;
 
             Glide.with(this).load(account.getPhotoUrl()).into(photoImageView);
 

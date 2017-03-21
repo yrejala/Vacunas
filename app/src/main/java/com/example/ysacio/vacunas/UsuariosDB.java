@@ -8,51 +8,51 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-/**
- * Created by maxvillamayor on 13/3/17.
- */
+
 
 public class UsuariosDB {
 
-        private SQLiteDatabase db;
-        private DBHelper dbHelper;
+    private SQLiteDatabase db;
+    private DBHelper dbHelper;
 
-        public UsuariosDB(Context context) {
-            dbHelper = new DBHelper(context);
-        }
+    public UsuariosDB(Context context) {
+        dbHelper = new DBHelper(context);
+    }
 
-        private void openReadableDB() {
-            db = dbHelper.getReadableDatabase();
-        }
+    private void openReadableDB() {
+        db = dbHelper.getReadableDatabase();
+    }
 
-        private void openWriteableDB() {
-            db = dbHelper.getWritableDatabase();
-        }
+    private void openWriteableDB() {
+        db = dbHelper.getWritableDatabase();
+    }
 
-        private void closeDB() {
-            if(db!=null){
-                db.close();
-            }
+    private void closeDB() {
+        if(db!=null){
+            db.close();
         }
+    }
 
 // CRUD...
 
-private static class DBHelper extends SQLiteOpenHelper {
+    private static class DBHelper extends SQLiteOpenHelper {
 
-    public DBHelper(Context context) {
-        super(context, ConstansDB.DB_NAME, null, ConstansDB.DB_VERSION);
+        public DBHelper(Context context) {
+            super(context, ConstansDB.DB_NAME, null, ConstansDB.DB_VERSION);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL(ConstansDB.TABLA_USUARIO_SQL);
+            db.execSQL(ConstansDB.TABLA_TIPO_VACUNA_SQL);
+            db.execSQL(ConstansDB.TABLA_VACUNA_SQL);
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
     }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(ConstansDB.TABLA_USUARIO_SQL);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
-}
 
 
     private ContentValues clienteMapperContentValues(Usuario usuario) {
@@ -66,9 +66,48 @@ private static class DBHelper extends SQLiteOpenHelper {
     }
 
 
+
+
+    private ContentValues tipoMapperContentValues(TipoVacunas tipovacunas) {
+        ContentValues cv2 = new ContentValues();
+        cv2.put(ConstansDB.VAC_TIPO_DESC,tipovacunas.getDescription());
+        cv2.put(ConstansDB.VAC_TIPO_FECHA_APLI,tipovacunas.getDate_vac());
+        return cv2;
+    }
+
+    private  ContentValues vacunasMapperContentValues(Vacunas vacunas) {
+        ContentValues cv3 = new ContentValues();
+        cv3.put(ConstansDB.VAC_ID_USU,vacunas.getId_usu());
+        cv3.put(ConstansDB.VAC_ID_TIPO,vacunas.getId_tipo());
+        cv3.put(ConstansDB.VAC_FECHA_APLI,vacunas.getFecha());
+        cv3.put(ConstansDB.VAC_RESPONSABLE,vacunas.getResponsable());
+        return cv3;
+
+    }
+
+
     public long insertCliente(Usuario usuario) {
         this.openWriteableDB();
         long rowID = db.insert(ConstansDB.TABLA_USUARIOS, null, clienteMapperContentValues(usuario));
+        this.closeDB();
+
+        return rowID;
+    }
+
+
+    public long insertTipo(TipoVacunas tipovacunas) {
+        this.openWriteableDB();
+        long rowID = db.insert(ConstansDB.TABLA_TIPO_VACUNAS, null, tipoMapperContentValues(tipovacunas));
+        this.closeDB();
+
+        return rowID;
+    }
+
+
+
+    public long insertVacuna(Vacunas vacunas) {
+        this.openWriteableDB();
+        long rowID = db.insert(ConstansDB.TABLA_VACUNAS, null, vacunasMapperContentValues(vacunas));
         this.closeDB();
 
         return rowID;
@@ -94,7 +133,7 @@ private static class DBHelper extends SQLiteOpenHelper {
         ArrayList list = new ArrayList<>();
 
         this.openReadableDB();
-        String[] campos = new String[]{ConstansDB.USU_ID, ConstansDB.USU_NOMBRE, ConstansDB.USU_MAIL, ConstansDB.USU_NOMBRE_BEBE,ConstansDB.USU_FECHA_NAC,ConstansDB.USU_SEXO};
+        String[] campos = new String[]{ConstansDB.USU_ID, ConstansDB.USU_NOMBRE, ConstansDB.USU_MAIL,ConstansDB.USU_NOMBRE_BEBE,ConstansDB.USU_FECHA_NAC,ConstansDB.USU_SEXO};
         Cursor c = db.query(ConstansDB.TABLA_USUARIOS, campos, null, null, null, null, null,null);
 
         try {
@@ -107,6 +146,30 @@ private static class DBHelper extends SQLiteOpenHelper {
                 usuario.setDate_baby(c.getString(4));
                 usuario.setSex(c.getString(5));
                 list.add(usuario);
+            }
+        } finally {
+            c.close();
+        }
+        this.closeDB();
+
+        return list;
+    }
+
+    public ArrayList loadTiposVacunas() {
+
+        ArrayList list = new ArrayList<>();
+
+        this.openReadableDB();
+        String[] campos = new String[]{ConstansDB.VAC_TIPO_DESC, ConstansDB.VAC_TIPO_FECHA_APLI, ConstansDB.VAC_LOT_VAC};
+        Cursor c = db.query(ConstansDB.TABLA_TIPO_VACUNAS, campos, null, null,null,null,null);
+
+        try {
+            while (c.moveToNext()) {
+                TipoVacunas tipvacunas = new TipoVacunas();
+                tipvacunas.setDescription(c.getString(0));
+                tipvacunas.setDate_vac(c.getString(1));
+                tipvacunas.setLote_vac(c.getString(2));
+                list.add(tipvacunas);
             }
         } finally {
             c.close();

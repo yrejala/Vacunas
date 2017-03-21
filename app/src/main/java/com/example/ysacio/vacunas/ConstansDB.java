@@ -1,8 +1,6 @@
 package com.example.ysacio.vacunas;
 
-/**
- * Created by maxvillamayor on 13/3/17.
- */
+
 
 public class ConstansDB {
 
@@ -30,5 +28,53 @@ public class ConstansDB {
                     USU_FECHA_NAC   + " TEXT," +
                     USU_SEXO   + " TEXT);" ;
 
-    //Otras tablas
+
+    //TABLA TIPO VACUNAS
+
+    public static final String TABLA_TIPO_VACUNAS = "tipo_vacunas";
+
+    public static final String VAC_TIPO_ID_TIPO= "_id_tipo";
+    public static final String VAC_TIPO_DESC = "descripcion";
+    public static final String VAC_TIPO_FECHA_APLI = "fecha_apli_vac";
+    public static final String VAC_LOT_VAC="lot_vac";
+
+
+
+
+    public static final String TABLA_TIPO_VACUNA_SQL =
+            "CREATE TABLE  " + TABLA_TIPO_VACUNAS + "(" +
+                    VAC_TIPO_ID_TIPO + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    VAC_TIPO_DESC + " TEXT," +
+                    VAC_TIPO_FECHA_APLI + " TEXT," +
+                    VAC_LOT_VAC + " TEXT);" ;
+
+
+
+
+
+
+    //TABLA VACUNAS
+
+    public static final String TABLA_VACUNAS = "vacunas";
+
+    public static final String VAC_ID = "_id_vac";
+    public static final String VAC_ID_USU = "_id_usu";
+    public static final String VAC_ID_TIPO= "_id_tipo";
+    public static final String VAC_FECHA_APLI = "fecha_apli_vac";
+    public static final String VAC_RESPONSABLE = "responsable_vac";
+
+
+
+    public static final String TABLA_VACUNA_SQL =
+            "CREATE TABLE  " + TABLA_VACUNAS + "(" +
+                    VAC_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    VAC_ID_USU + " INTEGER NOT NULL CONSTRAINT fk_id_usu REFERENCES vacunas(_id_) ON DELETE CASCADE ON UPDATE CASCADE,"+
+                    VAC_ID_TIPO + " INTEGER NOT NULL CONSTRAINT fk_id_tipo REFERENCES vacunas(_id_tipo) ON DELETE CASCADE ON UPDATE CASCADE,"+
+                    VAC_FECHA_APLI   + " TEXT," +
+                    VAC_RESPONSABLE   + " TEXT);" ;
+
+
+
+
+
 }
