@@ -17,7 +17,7 @@ public class Vacunas {
 
     public Vacunas() {}
 
-    public Vacunas(int id_usu , int id_tipo, String fecha, String responsable) {
+    public Vacunas(int id_usu ,int id_tipo,String fecha,String responsable) {
         this.id_usu = id_usu;
         this.id_tipo = id_tipo;
         this.fecha = fecha;

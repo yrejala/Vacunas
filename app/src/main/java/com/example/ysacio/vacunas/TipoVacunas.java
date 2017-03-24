@@ -1,7 +1,7 @@
 package com.example.ysacio.vacunas;
 
 /**
- * Created by isabelinorolandolopezroman on 20/3/17.
+ * Created by maxvillamayor on 20/3/17.
  */
 
 public class TipoVacunas {
@@ -14,7 +14,7 @@ public class TipoVacunas {
 
     public TipoVacunas() {}
 
-    public TipoVacunas(String description , String date_vac, String lote_vac) {
+    public TipoVacunas(String description ,String date_vac,String lote_vac) {
         this.description = description;
         this.date_vac = date_vac;
         this.lote_vac=lote_vac;

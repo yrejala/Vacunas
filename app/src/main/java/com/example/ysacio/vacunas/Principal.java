@@ -1,9 +1,11 @@
 package com.example.ysacio.vacunas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,6 +28,8 @@ import com.google.android.gms.common.api.Status;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 public class Principal extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -143,7 +147,7 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
         //mostrarClientesLog();
 
         //Log.i("---> Base de datos: ", "Borrando Cliente con id 1....");
-        // db.deleteCliente(1);
+       // db.deleteCliente(1);
         //mostrarClientesLog();
 
 //        Log.i("---> Base de datos: ", "Cambiando el nombre de cliente2....");
@@ -171,7 +175,7 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
 
 
     private void mostrarClientesLog() {
-        final List list = db.loadClientes();
+       final List list = db.loadClientes();
 
         final List list2 = db.loadTiposVacunas();
 

@@ -8,9 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
-
 /**
-
  * Created by maxvillamayor on 13/3/17.
  */
 
@@ -21,17 +19,14 @@ public class UsuariosDB {
 
         public UsuariosDB(Context context) {
             dbHelper = new DBHelper(context);
-
         }
 
         private void openReadableDB() {
             db = dbHelper.getReadableDatabase();
-
         }
 
         private void openWriteableDB() {
             db = dbHelper.getWritableDatabase();
-
         }
 
         private void closeDB() {
@@ -40,14 +35,12 @@ public class UsuariosDB {
             }
         }
 
-
 // CRUD...
 
 private static class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
         super(context, ConstansDB.DB_NAME, null, ConstansDB.DB_VERSION);
-
     }
 
     @Override
@@ -55,12 +48,10 @@ private static class DBHelper extends SQLiteOpenHelper {
         db.execSQL(ConstansDB.TABLA_USUARIO_SQL);
         db.execSQL(ConstansDB.TABLA_TIPO_VACUNA_SQL);
         db.execSQL(ConstansDB.TABLA_VACUNA_SQL);
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
 
     }
 }

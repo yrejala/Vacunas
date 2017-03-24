@@ -1,7 +1,7 @@
 package com.example.ysacio.vacunas;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.widget.TextView;
 
 public class DetalleUsuario extends AppCompatActivity {

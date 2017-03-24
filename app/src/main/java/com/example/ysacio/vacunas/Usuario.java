@@ -26,9 +26,6 @@ public class Usuario {
         this.sex = sex;
     }
 
-
-
-
     public int getId() {
         return id;
     }
@@ -94,7 +91,6 @@ public class Usuario {
                 return
                 " Nombre:" + name_baby +"\n"+
                 " Fecha Nacimiento:" + date_baby +"\n"+
-
                 " Sexo:" + sex  ;
     }
 
