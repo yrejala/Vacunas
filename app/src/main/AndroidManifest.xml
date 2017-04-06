@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".Principal"/>
 		<activity android:name=".DetalleUsuario"></activity>
+        <activity android:name=".ResultNotificacion"></activity>
     </application>
 
 </manifest>

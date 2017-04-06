@@ -56,13 +56,19 @@ public class TipoVacunas {
     @Override
     public String toString() {
 
-        return description;
-//        return "TipoVacunas{" +
-//                "id=" + id +
-//                ", description='" + description + '\'' +
-//                ", date_vac='" + date_vac + '\'' +
-//                ", lote_vac='" + lote_vac + '\'' +
-//                '}';
+
+        return //"TipoVacunas{" +
+
+
+
+
+
+                //"id:"+ id +"\n"+
+                description +"\n";
+        //"date_vac:" + date_vac +"\n"+
+        //"lote_vac:" + lote_vac;
+        //'}';
     }
+
 
 }

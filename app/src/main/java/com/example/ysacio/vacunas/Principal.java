@@ -1,11 +1,17 @@
 package com.example.ysacio.vacunas;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +32,12 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 
@@ -51,6 +62,7 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
     //String email[] = {"mirna@hotmail.com","belen@gmail.com","carla@yahoo.com","clau@hotmail.com"};
 
     private UsuariosDB db;
+    List list,list1,list2,list3,list4;
 
 
     @Override
@@ -87,9 +99,9 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
 
 
 
-        Usuario cliente1 = new Usuario("Mirian","mirian@mail.net","Franco","22-01-2013","M");
+        Usuario cliente1 = new Usuario("Mirian","mirian@mail.net","Franco","06-03-2017","M");
         Usuario cliente2 = new Usuario("Maria","maria@mail.net","Pedro","22-01-2013","M");
-        Usuario cliente3 = new Usuario("Mirta","mirna@mail.net","Carlos","22-01-2013","M");
+        Usuario cliente3 = new Usuario("Mirta","mirna@mail.net","Carlos","07-03-2017","M");
         Usuario cliente4 = new Usuario("Juana","juana@mail.net","Daniel","22-01-2013","M");
         Usuario cliente5 = new Usuario("Blanca","blanca@mail.net","Emma","22-01-2013","F");
 
@@ -147,7 +159,7 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
         //mostrarClientesLog();
 
         //Log.i("---> Base de datos: ", "Borrando Cliente con id 1....");
-       // db.deleteCliente(1);
+        // db.deleteCliente(1);
         //mostrarClientesLog();
 
 //        Log.i("---> Base de datos: ", "Cambiando el nombre de cliente2....");
@@ -167,25 +179,150 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
 
 
 
+        Log.d("Esto es la fecha del telefono:",String.valueOf(getDatePhone()));
+
+        String daytel,monttel,yeartel,d1,m1,y1,d2,m2,y2;
+
+        daytel=getDatePhone().substring(0,2);
+        monttel=getDatePhone().substring(3,5);
+        yeartel=getDatePhone().substring(6,10);
+
+        Log.d("dia",daytel);
+        Log.d("mes",monttel);
+        Log.d("año",yeartel);
+
+        list1 = db.loadClientes();
+        list2 = db.loadTiposVacunas();
+
+        list3=db.loadVacunas();
+        list4=db.loadClientes2();
+
+        Log.d("@Esto es Usuarios:",String.valueOf(list4.get(0)));
+
+        d1=String.valueOf(list4.get(0)).substring(0,2);
+        m1=String.valueOf(list4.get(0)).substring(3,5);
+        y1=String.valueOf(list4.get(0)).substring(6,10);
+
+        Log.d("dia1",d1);
+        Log.d("mes1",m1);
+        Log.d("año1",y1);
+
+        Log.d("@Esto es Usuarios:",String.valueOf(list4.get(2)));
+
+        d2=String.valueOf(list4.get(2)).substring(0,2);
+        m2=String.valueOf(list4.get(2)).substring(3,5);
+        y2=String.valueOf(list4.get(2)).substring(6,10);
+
+        Log.d("dia2",d2);
+        Log.d("mes2",m2);
+        Log.d("año2",y2);
+
+        String fecha_telef=getDatePhone();
+        String fecha_bebe=String.valueOf(list4.get(0));
+        String fecha_bebe2=String.valueOf(list4.get(2));
+
+
+
+
+        try {
+
+            SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
+
+            Date fecha1=sdf.parse(fecha_telef);
+
+            Date fecha2=sdf.parse(fecha_bebe);
+
+            Date fecha3=sdf.parse(fecha_bebe2);
+
+
+            if(fecha1.before(fecha2)) {
+
+                Log.d("Fecha_Local es Menor","fecha de bebe 1");
+            }else{
+                if(fecha2.before(fecha1)){
+
+                    Log.d("Fecha_Local es Mayor","fecha de bebe 1");
+                }else{
+
+                    Log.d("Fecha_Local es Igual","fecha de bebe 1");
+                }
+
+            }
+
+
+            if(fecha1.before(fecha3)) {
+
+                Log.d("Fecha_Local es Menor","fecha de bebe 2");
+            }else{
+                if(fecha3.before(fecha1)){
+
+                    Log.d("Fecha_Local es Mayor","fecha de bebe 2");
+                }else{
+
+                    Log.d("Fecha_Local es Igual","fecha de bebe 2");
+                }
+
+            }
+
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // int resul1,result2;
+//        resul1=Integer.parseInt(monttel)-Integer.parseInt(m1);
+
+        String mensa= String.valueOf(list4.get(0))+"\n"+String.valueOf(list4.get(2));
+
+        showNotification(mensa+"\n"+"Deben aplicarse:"+"ROTA1"+"\n"+"IPV"+"\n"+"PENTA"+"\n"+"PCV10"+"\n");
+
+
+//        Log.d("@Esto es Vacunas:",String.valueOf(list3.get(0)));
+//        Log.d("@Esto es tipo vacuna:",String.valueOf(list2.get(0)));
+
+//        if()
+//
+
+
 
 
 
 
     }
 
+    private String getDatePhone()
+
+    {
+
+        Calendar cal = new GregorianCalendar();
+
+        Date date = cal.getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+        String formatteDate = df.format(date);
+
+        return formatteDate;
+
+    }
+
 
     private void mostrarClientesLog() {
-       final List list = db.loadClientes();
+        list= db.loadClientes();
 
-        final List list2 = db.loadTiposVacunas();
+        //final List list2 = db.loadTiposVacunas();
+
+
+        Log.d("Esto es usuarios",list.toString());
 
 
 
         adaptador = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1,list.toArray());
 
-        adaptador2 = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1,list2.toArray());
+        //adaptador2 = new ArrayAdapter(this,
+        //      android.R.layout.simple_list_item_1,list2.toArray());
 
         listado.setAdapter(adaptador);
 
@@ -234,7 +371,39 @@ public class Principal extends FragmentActivity implements GoogleApiClient.OnCon
     }
 
 
+    public void showNotification(String mensaje) {
 
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.common_google_signin_btn_icon_dark)
+                        .setContentTitle("My notification")
+                        .setContentText(mensaje);
+// Crea una intención explícita para una actividad en tu aplicación.
+        Intent resultIntent = new Intent(this, ResultNotificacion.class);
+        resultIntent.putExtra("notificacionID",mensaje);
+
+// El objeto de constructor de pila contendrá una pila posterior artificial para
+// Actividad iniciada.
+// Esto asegura que navegar hacia atrás desde la Actividad
+// Su aplicación a la pantalla de inicio.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+// Agrega la pila trasera para el intento (pero no para el intent)
+        stackBuilder.addParentStack(Principal.class);
+// Añade la intención que inicia la actividad en la parte superior de la pila
+        stackBuilder.addNextIntent(resultIntent);
+        PendingIntent resultPendingIntent =
+                stackBuilder.getPendingIntent(
+                        0,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(resultPendingIntent);
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+// MId le permite actualizar la notificación más adelante.
+        int mId=1;
+        mNotificationManager.notify(mId, mBuilder.build());
+    }
 
     @Override
     protected void onStart() {
