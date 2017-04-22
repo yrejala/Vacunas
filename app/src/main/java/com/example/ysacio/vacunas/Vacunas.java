@@ -67,12 +67,12 @@ public class Vacunas {
 
     @Override
     public String toString() {
-        return "Vacunas{" +
+        return //"Vacunas{" +
                 "id=" + id +
-                ", id_usu=" + id_usu +
-                ", id_tipo=" + id_tipo +
-                ", fecha='" + fecha + '\'' +
-                ", responsable='" + responsable + '\'' +
-                '}';
+                        "id_usu=" + id_usu +
+                        "id_tipo=" + id_tipo;
+        //"fecha='" + fecha + '\'' +
+        //"responsable='" + responsable ;
+
     }
 }

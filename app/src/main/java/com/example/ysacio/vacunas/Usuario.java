@@ -88,10 +88,11 @@ public class Usuario {
 //                ", sex='" + sex + '\'' +
 //                '}';
 
-                return
-                " Nombre:" + name_baby +"\n"+
-                " Fecha Nacimiento:" + date_baby +"\n"+
-                " Sexo:" + sex  ;
+        return
+                "Numero:"+id+"\n"+
+                        " Nombre:" + name_baby +"\n"+
+                        " Fecha Nacimiento:" + date_baby +"\n"+
+                        " Sexo:" + sex  ;
     }
 
 
