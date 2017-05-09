@@ -1,4 +1,4 @@
-package com.androidtutorialpoint.retrofitandroid;
+package com.example.ysacio.vacunas;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

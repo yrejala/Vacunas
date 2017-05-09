@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,6 +23,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.util.List;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+import retrofit.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
 
     private LinearLayout Prof_Section;
@@ -32,10 +41,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private GoogleApiClient googleApiClient;
     private static final int REQ_CODE = 9001;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //get_usuario();
+
+
         Prof_Section = (LinearLayout)findViewById(R.id.prof_section);
         SignOut = (Button)findViewById(R.id.bn_logout);
         SignIn = (SignInButton)findViewById(R.id.bn_login);
@@ -47,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Prof_Section.setVisibility(View.GONE);
         GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions).build();
+
+        //get_usuario();
 
     }
 
@@ -126,10 +142,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Prof_Section.setVisibility(View.GONE);
             SignIn.setVisibility(View.VISIBLE);
         }
-
-
-
-
     }
 
     @Override
@@ -142,4 +154,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             handleResult(result);
         }
     }
+
 }

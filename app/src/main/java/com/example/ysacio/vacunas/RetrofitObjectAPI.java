@@ -1,15 +1,11 @@
-package com.androidtutorialpoint.retrofitandroid;
+package com.example.ysacio.vacunas;
 
 
 import retrofit.Call;
 import retrofit.http.GET;
 import retrofit.http.Path;
-import retrofit.http.Query;
 
 
-/**
- * Created by navneet on 4/6/16.
- */
 public interface RetrofitObjectAPI {
     //String correo = "maxvillamayor@technoma.com.py" ;
     /*
