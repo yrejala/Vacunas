@@ -30,4 +30,5 @@
         android:textAllCaps="true"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
+
 </RelativeLayout>

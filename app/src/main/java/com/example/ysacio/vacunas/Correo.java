@@ -5,22 +5,34 @@ import com.google.gson.annotations.SerializedName;
 
 public class Correo {
 
-@SerializedName("correo")
-@Expose
-private String correo;
+    private Integer id;
+    @SerializedName("correo")
+    @Expose
+    private String correo;
 
-public String getCorreo() {
-return correo;
-}
 
-public void setCorreo(String correo) {
-this.correo = correo;
-}
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
     @Override
     public String toString() {
         return "Correo{" +
-                "correo='" + correo + '\'' +
+                "id=" + id +
+                ", correo='" + correo + '\'' +
                 '}';
     }
+
 }
