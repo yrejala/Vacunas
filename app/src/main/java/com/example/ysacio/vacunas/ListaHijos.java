@@ -76,17 +76,17 @@ public class ListaHijos extends AppCompatActivity {
         lv = (ListView) findViewById(R.id.listaHijos);
         new GetContacts().execute();
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                    Intent myIntent = new Intent(view.getContext(), ListaVacunas.class);
-                    myIntent.putExtra("idHijo", idHijo);
-
-                    Log.d("onResponse", "Envio idHijo a la clase ListaVacunas " + idHijo);
-                    startActivityForResult(myIntent, 0);
-
-            }
-        });
+//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view,
+//                                    int position, long id) {
+//                Intent myIntent = new Intent(view.getContext(), ListaVacunas.class);
+//                myIntent.putExtra("idHijo", idHijo);
+//
+//                Log.d("onResponse", "Envio idHijo a la clase ListaVacunas " + idHijo);
+//                startActivityForResult(myIntent, 0);
+//
+//            }
+//        });
 
 
 
@@ -167,11 +167,16 @@ public class ListaHijos extends AppCompatActivity {
                         Log.e("Message","loop");
                         HashMap<String, String> datosHijo = new HashMap<>();
                         JSONObject e = jsonarray.getJSONObject(i);
-                        datosHijo.put("idHijo", "id Hijo:" + e.getString("id"));
-                        datosHijo.put("nombre", "Nombre :" + e.getString("nombre"));
-                        datosHijo.put("apellido", "Apellido : " +  e.getString("apellido"));
-                        datosHijo.put("sexo", "Sexo : " +  e.getString("sexo"));
-                        datosHijo.put("fechaNac", "Fecha de Nacimiento : " +  e.getString("fechaNac"));
+                        datosHijo.put("idHijo", e.getString("id"));
+                        Log.d("onResponse", "Se carga idHijo en array " + e.getString("id"));
+                        datosHijo.put("nombre", e.getString("nombre"));
+                        Log.d("onResponse", "Se carga nombre en array " + e.getString("nombre"));
+                        datosHijo.put("apellido", e.getString("apellido"));
+                        Log.d("onResponse", "Se carga apellido en array " + e.getString("apellido"));
+                        datosHijo.put("sexo", e.getString("sexo"));
+                        Log.d("onResponse", "Se carga sexo en array " + e.getString("sexo"));
+                        datosHijo.put("fechaNac", e.getString("fechaNac"));
+                        Log.d("onResponse", "Se carga fechaNac en array " + e.getString("fechaNac"));
                         ListaHijos.add(datosHijo);
 
 
@@ -218,13 +223,32 @@ public class ListaHijos extends AppCompatActivity {
              * */
 
 
-            ListAdapter adapter = new SimpleAdapter(
+            final ListAdapter adapter = new SimpleAdapter(
                     ListaHijos.this, ListaHijos,
                     R.layout.lista_hijos, new String[]{ "idHijo","nombre",
                     "apellido", "sexo", "fechaNac"}, new int[]{
                     R.id.idHijo, R.id.nombre, R.id.apellido, R.id.sexo, R.id.fechaNac});
 
             lv.setAdapter(adapter);
+
+
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+
+                    HashMap<String,String>Dato=new HashMap<String, String>();
+                    Dato= (HashMap<String, String>) adapter.getItem(position);
+                    Object obj = lv.getAdapter().getItem(position);
+                    String idHijo=String.valueOf(Dato.get("idHijo"));
+
+                    Intent myIntent = new Intent(view.getContext(), ListaVacunas.class);
+                    myIntent.putExtra("idHijo", idHijo);
+
+                    Log.d("onResponse", "Envio idHijo a la clase ListaVacunas " + idHijo);
+                    startActivity(myIntent);
+
+                }
+            });
         }
 
 

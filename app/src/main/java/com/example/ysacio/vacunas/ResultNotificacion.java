@@ -19,21 +19,22 @@ public class ResultNotificacion extends AppCompatActivity {
         notif.setText(getIntent().getStringExtra("notificacionID"));
 
 
+
     }
 
 
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // TODO Auto-generated method stub
-        if (keyCode == event.KEYCODE_BACK) {
-
-            Intent ir_principal=new Intent(ResultNotificacion.this,Principal.class);
-            startActivity(ir_principal);
-
-
-
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        // TODO Auto-generated method stub
+//        if (keyCode == event.KEYCODE_BACK) {
+//
+//            Intent ir_principal=new Intent(ResultNotificacion.this,ListaVacunas.class);
+//            startActivity(ir_principal);
+//
+//
+//
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }
